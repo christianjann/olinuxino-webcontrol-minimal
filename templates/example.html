@@ -1,5 +1,12 @@
 {% extends "bootstrap_responsive.html" %}
-{% import "bootstrap_wtf.html" as wtf %}
+
+{% macro check_box(name, text, value='', checked=False) -%}
+  {% if checked %}
+    <label class="checkbox"><input id="{{ name }}" name="{{ name }}" type="checkbox" value="{{ value|e}}" checked="checked"/>{{ text }}</label>
+  {% else %}
+    <label class="checkbox"><input id="{{ name }}" name="{{ name }}" type="checkbox" value="{{ value|e}}" />{{ text }}</label>
+  {% endif %}
+{%- endmacro %}
 
 {% block body_content %}
     <div class="navbar navbar-fixed-top">
@@ -27,32 +34,27 @@
       <div class="hero-unit">
         <h1>Hello, world!</h1>
         <p>This is a simple webapp running on the OLinuXino. Use it as a starting point to create something more unique.</p>
-        <p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+        <p><a href="http://www.jann.cc/2012/12/16/http://www.jann.cc/2012/12/16/olinuxino_micro_usb_3g_modem_web_control.html" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
       </div>
 
       <!-- Example row of columns -->
       <div class="row">
         <div class="span4">
           <h2>LEDs</h2>
-          <form class="form form-horizontal" method="post">
-            {{ form.hidden_tag() }}
-            {{ wtf.form_errors(form, False) }}
-            
-            <label class="checkbox">{{form.led1}} LED1</label>
-            <label class="checkbox">{{form.led2}} LED2</label></p>
-
+          <form class="form form-horizontal" method="post" action="{{ url_for('set_leds') }}">
+            {{ check_box('led1', 'LED 1', value='1', checked=in_out['led1']) }}
+            {{ check_box('led2', 'LED 2', value='1', checked=in_out['led2']) }}
             <p><button name="action_save" type="submit" class="btn btn-primary">Send new LED state</button></p>
           </form>
-
         </div>
         <div class="span4">
           <h2>Heading</h2>
-           <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+           <p>Donec id elit non mi porta gravida at eget metus.</p>
           <p><a class="btn" href="#">View details &raquo;</a></p>
-       </div>
+        </div>
         <div class="span4">
           <h2>Heading</h2>
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
           <p><a class="btn" href="#">View details &raquo;</a></p>
         </div>
       </div>
@@ -67,14 +69,14 @@
             {% endfor %}
             {% endif %}
         {% endwith %}
-    
+
         </div>
       </div>
 
       <hr>
 
       <footer>
-      <p>&copy; jann.cc 2012</p>
+      <p>&copy; 2013 <a href="http://www.jann.cc">jann.cc</a></p>
       </footer>
 
     </div> <!-- /container -->

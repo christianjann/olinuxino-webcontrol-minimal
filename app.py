@@ -19,24 +19,26 @@ app.config['BOOTSTRAP_USE_CDN'] = True
 app.config['BOOTSTRAP_FONTAWESOME'] = True
 app.config['SECRET_KEY'] = 'devkey'
 
+
 @app.route('/')
 def index():
-  in_out = {'led1': bool(readpins(32)), 'led2': bool(readpins(33))}
-  return render_template('example.html', in_out=in_out)
+    in_out = {'led1': bool(readpins(32)), 'led2': bool(readpins(33))}
+    return render_template('example.html', in_out=in_out)
+
 
 @app.route('/set_leds', methods=('GET', 'POST',))
 def set_leds():
-  if request.method == 'POST':
-    led1 = bool(request.form.get('led1'))
-    led2 = bool(request.form.get('led2'))
-    print("led1: ", led1)
-    print("led2: ", led2)
-    flash('LEDs have been updated: LED1="' + str(led1)
-          + '", LED2="' + str(led2) +'"', 'success')
-    writepins(32, int(led1))
-    writepins(33, int(led2))
-  return redirect(url_for('index'))
+    if request.method == 'POST':
+        led1 = bool(request.form.get('led1'))
+        led2 = bool(request.form.get('led2'))
+        print("led1: ", led1)
+        print("led2: ", led2)
+        flash('LEDs have been updated: LED1="' + str(led1)
+              + '", LED2="' + str(led2) + '"', 'success')
+        writepins(32, int(led1))
+        writepins(33, int(led2))
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
-  # '0.0.0.0': listen on all public IPs
-  app.run(host = '0.0.0.0', port = 5000, debug = True)
+    # '0.0.0.0': listen on all public IPs
+    app.run(host='0.0.0.0', port=5000, debug=True)

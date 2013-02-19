@@ -31,7 +31,7 @@ def export_pins(pins):
     f.write(str(pins))
     f.close()
   except IOError:
-    print "GPIO %s already Exists, so skipping export gpio" % (str(pins), )
+    print("GPIO %s already Exists, so skipping export gpio" % (str(pins), ))
   except:
     print("ERR: export_pins()")
 
@@ -41,7 +41,7 @@ def unexport_pins(pins):
     f.write(str(pins))
     f.close()
   except IOError:
-    print "GPIO %s is not found, so skipping unexport gpio" % (str(pins), )
+    print("GPIO %s is not found, so skipping unexport gpio" % (str(pins), ))
   except:
     print("ERR: unexport_pins()")
 
@@ -71,7 +71,7 @@ def readpins(pin_no):
     gpiopin = "gpio%s" % (str(pin_no), )
     pin = open("/sys/class/gpio/"+gpiopin+"/value","r")
     value = pin.read()
-    print "The value on the PIN %s is : %s" % (str(pin_no), str(value))
+    print("The value on the PIN %s is : %s" % (str(pin_no), str(value)))
     pin.close()
     return int(value)
   except:
